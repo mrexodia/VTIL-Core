@@ -10,8 +10,7 @@ option(VTIL_BUILD_TESTS "Build tests" OFF)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 # Resolve external dependencies
-# This should automatically pull in Capstone & Keystone as CMake linkable libraries
-include(IncludeDeps)
+add_subdirectory(Dependencies)
 
 # Include subprojects
 # The dependency chain order is  Common > Architecture + SymEx > Optimizer, so include in that order

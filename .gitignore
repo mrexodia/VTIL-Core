@@ -373,6 +373,4 @@ FodyWeavers.xsd
 .history/
 
 ## VTIL Project related
-build/
-Capstone/
-Keystone/
+build*/
