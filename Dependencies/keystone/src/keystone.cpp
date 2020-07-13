@@ -1,4 +1,4 @@
-#include "..\include\keystone\keystone.h"
+#include <keystone/keystone.h>
 
 KEYSTONE_EXPORT ks_err ks_open(ks_arch arch, int mode, ks_engine** ks)
 {
