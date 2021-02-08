@@ -169,6 +169,9 @@ namespace vtil
 			is_valid( true );
 		}
 
+		template<Enum T>
+		register_desc( T v ) : register_desc( register_cast<T>()( v ) ) { }
+
 		// Returns whether the descriptor is valid or not.
 		//
 		constexpr bool is_valid( bool force = false ) const

@@ -41,6 +41,7 @@
 #include "../util/numeric_iterator.hpp"
 #include "../util/intrinsics.hpp"
 #include "enum_name.hpp"
+#include "strong_formatting.hpp"
 
 // [Configuration]
 // Macro wrapping ANSI escape codes, can be replaced by '#define ANSI_ESCAPE(...)' in legacy Windows to disable colors completely.
@@ -167,7 +168,7 @@ namespace vtil::format
 		}
 		else if constexpr ( std::is_same_v<base_type, int64_t> )
 		{
-			return hex_t<base_type>( x ).to_string();
+			return hexadecimal<base_type>( x ).to_string();
 		}
 		else if constexpr ( std::is_same_v<base_type, bool> )
 		{

@@ -13,7 +13,7 @@ source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${SOURCES} ${INCLUDES})
 target_include_directories(${PROJECT_NAME} PUBLIC includes)
 
 # Common needs Capstone & Keystone
-target_link_libraries(${PROJECT_NAME} capstone-static keystone)
+target_link_libraries(${PROJECT_NAME} PUBLIC capstone-static keystone)
 
 # Put all VTIL-specific compiler flags here
 # Linking (indirectly) to VTIL-Common will automatically propagate these flags
@@ -21,6 +21,11 @@ target_link_libraries(${PROJECT_NAME} capstone-static keystone)
 
 # https://cmake.org/cmake/help/v3.14/manual/cmake-compile-features.7.html#requiring-language-standards
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
+
+# Make sure ::min/max does not resolve to a Windows.h macro
+if(WIN32)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC WIN32_LEAN_AND_MEAN NOMINMAX)
+endif()
 
 # For portability on non-MSVC compilers, add some compile options
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
@@ -48,3 +53,7 @@ if(MSVC)
     # -fpermissive MSVC equivalent
     target_compile_options(${PROJECT_NAME} PUBLIC /permissive-)
 endif()
+
+# Include Threads
+find_package(Threads REQUIRED)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
