@@ -222,12 +222,16 @@ namespace vtil
 	inline static void save_routine( const routine* rtn, const std::filesystem::path& path )
 	{
 		std::ofstream fs( path, std::ios::binary );
+		if ( !fs.is_open() )
+			throw std::runtime_error( vtil::format::str("Failed to create file '%s'", path.string() ) );
 		serialize( fs, rtn );
 	}
 	inline static routine* load_routine( const std::filesystem::path& path )
 	{
 		routine* rtn;
 		std::ifstream fs( path, std::ios::binary );
+		if ( !fs.is_open() )
+			throw std::runtime_error( vtil::format::str( "Failed to open file '%s'", path.string() ) );
 		deserialize( fs, rtn );
 		return rtn;
 	}

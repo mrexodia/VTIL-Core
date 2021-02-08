@@ -246,7 +246,7 @@ namespace vtil::logger
 				out_cnt += fputs( fmt, dst );
 			}
 
-			// Reset to defualt color.
+			// Reset to default color.
 			//
 			fputs( translate_color( CON_DEF ), dst );
 			return out_cnt;
@@ -276,7 +276,7 @@ namespace vtil::logger
 		std::string message = "\n"s + impl::translate_color( CON_YLW ) + "[!] Warning: "s + format::str(
 			fmt,
 			std::forward<params>( ps )...
-		) + "\n";
+		) + impl::translate_color( CON_DEF ) + "\n";
 
 		// Try acquiring the lock and print the warning, if properly locked skiped the first newline.
 		//
@@ -308,7 +308,7 @@ namespace vtil::logger
 		// If there is an active hook, call into it, then add formatting.
 		//
 		if ( error_hook ) error_hook( message );
-		message = "\n"s + impl::translate_color( CON_RED ) + "[*] Error:" + std::move( message ) + "\n";
+		message = "\n"s + impl::translate_color( CON_RED ) + "[*] Error:" + std::move( message ) + impl::translate_color( CON_DEF ) + "\n";
 
 		// Try acquiring the lock and print the error, if properly locked skiped the first newline.
 		//
@@ -336,7 +336,7 @@ namespace vtil::logger
 				//
 				logger_state.try_lock();
 				std::string message = format::as_string( e );
-				fprintf( VTIL_LOGGER_ERR_DST, "%s\n[*] Error: %s\n", impl::translate_color( CON_RED ), message.c_str() );
+				fprintf( VTIL_LOGGER_ERR_DST, "%s\n[*] Error: %s%s\n", impl::translate_color( CON_RED ), message.c_str(), impl::translate_color ( CON_DEF ) );
 				sleep_for( 1000ms );
 			}
 			catch ( ... ) {}
